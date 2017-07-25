@@ -1,10 +1,12 @@
-[
-    {
-        "Description": "Ubuntu 14044 OVA",
-        "Format": "ova",
-        "UserBucket": {
-            "S3Bucket": "urao-img",
-            "S3Key": "ubuntu14044.ova"
+{  
+    "Description": "Description of my OVA",
+    "DiskContainers": [
+        {
+            "Description": "Centos OS",
+            "UserBucket": {
+                "S3Bucket": "urao-contrail",
+                "S3Key": "ucentos.ova"
+            }
         }
-    }
-]
+    ]
+}
