@@ -15,5 +15,7 @@ aws iam create-role --role-name vmimport --assume-role-policy-document file://tr
 aws iam put-role-policy --role-name vmimport --policy-name vmimport --policy-document file://role-policy.json
 aws ec2 import-image --cli-input-json file://image.json
 
+aws ec2 import-image --cli-input-json "{  \"Description\": \"Description of my OVA\", \"DiskContainers\": [ { \"Description\": \"Disk Description\", \"UserBucket\": { \"S3Bucket\": \"urao-contrail\", \"S3Key\" : \"ucentos.ova\" } } ]}"
+
 Watch the progress by running the below command:
 aws ec2 describe-import-image-tasks
