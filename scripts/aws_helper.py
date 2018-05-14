@@ -5,6 +5,12 @@ import json
 import subprocess
 
 
+def get_aws_route_table_subnets(route_table_id):
+    pass
+
+def get_aws_route_table(subnet_id, vpc_id):
+    pass
+
 def get_ip_for_instance_name(instance_name):
     ''' return IP for specific instance '''
 
