@@ -4,12 +4,37 @@ import logging
 import json
 import subprocess
 
-
 def get_aws_route_table_subnets(route_table_id):
-    pass
+    ''' returns list of subnets in use '''
+    try:
+        res = subprocess.check_output(["aws", "ec2", "describe-route-tables", "--route-table-ids", route_table_id])
+    except subprocess.CalledProcessError as e:
+        logging.error(e)
+        logging.error("Check AWS credentials are set")
+        return None
+
+    try:
+        rt_table = json.loads(res)
+    except ValueError as e:
+        logging.error(e)
+        logging.error("Error loading json output")
+        return None
+
+    routes = rt_table["Routetable"][0]["Routes"]
+    return routes
 
 def get_aws_route_table(subnet_id, vpc_id):
-    pass
+    ''' return dict of route_table_id '''
+
+    try:
+        res = subprocess.check_output(["aws", "ec2", "describe-route-tables", "--filters", "Name=association.subnet-id,Values={}".format(subnet_id)])
+        if not json.loads(res)['RouteTables']:
+            route_tables = subprocess.check_output(["aws", "ec2", "describe-route-tables", "--filters", 'Name=vpc-id,Values={}'.format(vpc_id), 'Name=association.main, Values=true'])
+
+    except subprocess.CalledProcessError as e:
+        logging.error(e)
+        logging.error("Check AWS credentials are set")
+        return None
 
 def get_ip_for_instance_name(instance_name):
     ''' return IP for specific instance '''
